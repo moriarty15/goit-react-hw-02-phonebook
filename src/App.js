@@ -1,9 +1,13 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import ContactForm from './components/ContactForm';
+import HandleCreateList from './components/ContactList';
+import Filter from './components/Filter/Filter';
 
 class App extends React.Component {
   state = {
     contacts: [],
+    filter: '',
     name: '',
     number: '',
   };
@@ -18,58 +22,41 @@ class App extends React.Component {
     const objd = {
       name: this.state.name,
       number: this.state.number,
+      id: uuidv4(),
     };
     this.setState({ contacts: [...this.state.contacts, objd] });
   };
-  handleCreateList = () => {
-    return (
-      <ul>
-        {this.state.contacts.map(contact => {
-          return (
-            <li key={uuidv4()}>
-              {contact.name}: {contact.number}
-            </li>
-          );
-        })}
-      </ul>
+
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+  getVisibleContacts = () => {
+    const { filter, contacts } = this.state;
+    const normalizeFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizeFilter),
     );
   };
+
   render() {
-    const { name, number } = this.state;
+    const { name, number, filter } = this.state;
+    const visibleContacts = this.getVisibleContacts();
     return (
       <div>
-        <p>Phonebook</p>
-        <label>
-          {' '}
-          Name
-          <input
-            value={name}
-            onChange={this.handleInputChange}
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Number
-          <input
-            type="tel"
-            value={number}
-            onChange={this.handleNumbers}
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
-            required
-          />
-        </label>
+        <h1>Phonebook</h1>
+        <ContactForm
+          name={name}
+          number={number}
+          onChange={this.handleInputChange}
+          onChange1={this.handleNumbers}
+        />
         <br />
         <button onClick={this.handlePushContact}>Add contact</button>
         <div>
-          Contacts
-          {this.handleCreateList()}
+          <h2>Contacts</h2>
+          <br />
+          <Filter filter={filter} onChange={this.changeFilter} />
+          <HandleCreateList f={visibleContacts} />
         </div>
       </div>
     );

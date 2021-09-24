@@ -5,25 +5,37 @@ class App extends React.Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
   handleInputChange = e => {
     this.setState({ name: e.currentTarget.value });
   };
+  handleNumbers = e => {
+    this.setState({ number: e.currentTarget.value });
+  };
   handlePushContact = () => {
     if (this.state.name.trim() === '') return;
-    this.setState({ contacts: [...this.state.contacts, this.state.name] });
+    const objd = {
+      name: this.state.name,
+      number: this.state.number,
+    };
+    this.setState({ contacts: [...this.state.contacts, objd] });
   };
   handleCreateList = () => {
     return (
       <ul>
         {this.state.contacts.map(contact => {
-          return <li key={uuidv4()}>{contact}</li>;
+          return (
+            <li key={uuidv4()}>
+              {contact.name}: {contact.number}
+            </li>
+          );
         })}
       </ul>
     );
   };
   render() {
-    const { name } = this.state;
+    const { name, number } = this.state;
     return (
       <div>
         <p>Phonebook</p>
@@ -40,6 +52,20 @@ class App extends React.Component {
             required
           />
         </label>
+        <br />
+        <label>
+          Number
+          <input
+            type="tel"
+            value={number}
+            onChange={this.handleNumbers}
+            name="number"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
+            required
+          />
+        </label>
+        <br />
         <button onClick={this.handlePushContact}>Add contact</button>
         <div>
           Contacts

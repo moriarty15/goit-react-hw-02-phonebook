@@ -1,35 +1,43 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ContactForm from './components/ContactForm';
-import HandleCreateList from './components/ContactList';
+import ContactList from './components/ContactList';
 import Filter from './components/Filter/Filter';
 
 class App extends React.Component {
   state = {
     contacts: [],
     filter: '',
-    name: '',
-    number: '',
   };
-  handleInputChange = e => {
-    this.setState({ name: e.currentTarget.value });
+  // функция получения значения из любого инпута
+  handleAllInputChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
   };
-  handleNumbers = e => {
-    this.setState({ number: e.currentTarget.value });
-  };
-  handlePushContact = () => {
-    if (this.state.name.trim() === '') return;
+
+  // метод добавления контакта в телефонную книгу
+  formSubmitHandler = data => {
+    // условие что контакт с таким именем есть в телефонной книге
+    if (this.state.contacts.some(e => e.name.includes(data.name))) {
+      alert(`${data.name} is already in contacts`);
+      return;
+    }
+    // объект с именем и номером телефона для пуша в общий массив контактов
     const objd = {
-      name: this.state.name,
-      number: this.state.number,
+      name: data.name,
+      number: data.number,
       id: uuidv4(),
     };
     this.setState({ contacts: [...this.state.contacts, objd] });
   };
-
-  changeFilter = e => {
-    this.setState({ filter: e.currentTarget.value });
+  // метод удаления контакта из телефонной книги
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
   };
+
+  // вынес фильтр в функцию
   getVisibleContacts = () => {
     const { filter, contacts } = this.state;
     const normalizeFilter = filter.toLowerCase();
@@ -39,25 +47,18 @@ class App extends React.Component {
   };
 
   render() {
-    const { name, number, filter } = this.state;
+    const { filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
     return (
       <div>
         <h1>Phonebook</h1>
-        <ContactForm
-          name={name}
-          number={number}
-          onChange={this.handleInputChange}
-          onChange1={this.handleNumbers}
+        <ContactForm onSubmit={this.formSubmitHandler} />
+        <h2>Contacts</h2>
+        <Filter filter={filter} onChange={this.handleAllInputChange} />
+        <ContactList
+          f={visibleContacts}
+          onDeleteContacts={this.deleteContact}
         />
-        <br />
-        <button onClick={this.handlePushContact}>Add contact</button>
-        <div>
-          <h2>Contacts</h2>
-          <br />
-          <Filter filter={filter} onChange={this.changeFilter} />
-          <HandleCreateList f={visibleContacts} />
-        </div>
       </div>
     );
   }

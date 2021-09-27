@@ -1,9 +1,12 @@
+import React from 'react';
+import './ContactList.scss';
+
 const ContactList = ({ f, onDeleteContacts }) => {
   return (
-    <ul>
+    <ul className="Contact__list">
       {f.map(({ id, name, number }) => {
         return (
-          <li key={id}>
+          <li key={id} className="Contact__item">
             {name}: {number}{' '}
             <button type="button" onClick={() => onDeleteContacts(id)}>
               delete

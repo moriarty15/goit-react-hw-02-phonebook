@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './ContactList.scss';
 
 class ContractForm extends Component {
   state = {
@@ -24,9 +25,10 @@ class ContractForm extends Component {
     return (
       <div>
         <form onSubmit={this.handlePushContact}>
-          <label>
+          <label className="label">
             Name
             <input
+              className="input"
               value={name}
               onChange={this.handleAllInputChange}
               type="text"
@@ -36,10 +38,10 @@ class ContractForm extends Component {
               required
             />
           </label>
-          <br />
-          <label>
+          <label className="label">
             Number
             <input
+              className="input"
               type="tel"
               value={number}
               onChange={this.handleAllInputChange}

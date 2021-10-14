@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ContactForm from './components/ContactForm';
 import ContactList from './components/ContactList';
 import Filter from './components/Filter/Filter';
+import Container from './components/Container';
 
 class App extends React.Component {
   state = {
@@ -28,7 +29,7 @@ class App extends React.Component {
       number: data.number,
       id: uuidv4(),
     };
-    this.setState({ contacts: [...this.state.contacts, objd] });
+    this.setState({ contacts: [objd, ...this.state.contacts] });
   };
   // метод удаления контакта из телефонной книги
   deleteContact = contactId => {
@@ -50,8 +51,7 @@ class App extends React.Component {
     const { filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <Container>
         <ContactForm onSubmit={this.formSubmitHandler} />
         <h2>Contacts</h2>
         <Filter filter={filter} onChange={this.handleAllInputChange} />
@@ -59,7 +59,7 @@ class App extends React.Component {
           f={visibleContacts}
           onDeleteContacts={this.deleteContact}
         />
-      </div>
+      </Container>
     );
   }
 }

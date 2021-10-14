@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './ContactList.scss';
+import './ContactForm.scss';
 
 class ContractForm extends Component {
   state = {
@@ -23,7 +23,7 @@ class ContractForm extends Component {
   render() {
     const { name, number } = this.state;
     return (
-      <div>
+      <div className="form__container">
         <form onSubmit={this.handlePushContact}>
           <label className="label">
             Name
@@ -36,6 +36,7 @@ class ContractForm extends Component {
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
               required
+              placeholder="Enter Name"
             />
           </label>
           <label className="label">
@@ -49,9 +50,10 @@ class ContractForm extends Component {
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
               required
+              placeholder="Enter Number"
             />
           </label>
-          <button>Add contact</button>
+          <button className="add__button">Add contact</button>
         </form>
       </div>
     );

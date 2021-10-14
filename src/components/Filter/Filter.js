@@ -1,8 +1,15 @@
 const Filter = ({ filter, onChange }) => {
   return (
-    <label>
+    <label className="label">
       Find contacts by name
-      <input type="text" name="filter" value={filter} onChange={onChange} />
+      <input
+        className="input"
+        type="text"
+        name="filter"
+        value={filter}
+        onChange={onChange}
+        placeholder="Enter search name"
+      />
     </label>
   );
 };

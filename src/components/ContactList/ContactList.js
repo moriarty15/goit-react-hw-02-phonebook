@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ContactList.scss';
 
 const ContactList = ({ f, onDeleteContacts }) => {
@@ -22,3 +23,9 @@ const ContactList = ({ f, onDeleteContacts }) => {
   );
 };
 export default ContactList;
+
+ContactList.propType = {
+  name: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+};

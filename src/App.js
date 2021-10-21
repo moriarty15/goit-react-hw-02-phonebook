@@ -52,6 +52,7 @@ class App extends React.Component {
     const visibleContacts = this.getVisibleContacts();
     return (
       <Container>
+        <h1>Phonebook</h1>
         <ContactForm onSubmit={this.formSubmitHandler} />
         <h2>Contacts</h2>
         <Filter filter={filter} onChange={this.handleAllInputChange} />

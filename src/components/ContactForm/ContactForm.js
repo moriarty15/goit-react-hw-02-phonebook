@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './ContactForm.scss';
 
 class ContractForm extends Component {
@@ -61,3 +62,7 @@ class ContractForm extends Component {
 }
 
 export default ContractForm;
+
+ContractForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

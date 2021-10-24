@@ -57,7 +57,7 @@ class App extends React.Component {
         <h2>Contacts</h2>
         <Filter filter={filter} onChange={this.handleAllInputChange} />
         <ContactList
-          f={visibleContacts}
+          filter={visibleContacts}
           onDeleteContacts={this.deleteContact}
         />
       </Container>

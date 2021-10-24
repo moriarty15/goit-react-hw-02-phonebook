@@ -7,12 +7,14 @@ class ContractForm extends Component {
     name: '',
     number: '',
   };
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   handleAllInputChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
-  };
-  handleS = e => {
-    e.preventDefault();
   };
   // функция записи новых абонентов в телефонную книгу
   handlePushContact = e => {
@@ -20,7 +22,13 @@ class ContractForm extends Component {
     if (this.state.name.trim() === '') return;
 
     this.props.onSubmit(this.state);
+    this.reset();
   };
+
+  reset = () => {
+    this.setState({ name: '', number: '' });
+  };
+
   render() {
     const { name, number } = this.state;
     return (
@@ -62,7 +70,3 @@ class ContractForm extends Component {
 }
 
 export default ContractForm;
-
-ContractForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

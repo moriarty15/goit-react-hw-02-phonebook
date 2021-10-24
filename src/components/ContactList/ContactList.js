@@ -9,14 +9,12 @@ const ContactList = ({ filter, onDeleteContacts }) => {
       {filter.map(({ id, name, number }) => {
         return (
           <li key={id} className="Contact__item">
-            <ContactListItem name={name} number={number} />
-            <button
-              className="button__delete"
-              type="button"
-              onClick={() => onDeleteContacts(id)}
-            >
-              delete
-            </button>
+            <ContactListItem
+              id={id}
+              name={name}
+              number={number}
+              onDeleteContacts={onDeleteContacts}
+            />
           </li>
         );
       })}
@@ -26,6 +24,5 @@ const ContactList = ({ filter, onDeleteContacts }) => {
 export default ContactList;
 
 ContactList.propType = {
-  filter: PropTypes.func.isRequired,
-  onDeleteContacts: PropTypes.func.isRequired,
+  filter: PropTypes.array.isRequired,
 };
